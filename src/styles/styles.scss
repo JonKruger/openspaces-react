@@ -1,0 +1,128 @@
+		body
+    {
+	    background-color: #f2f2f3;
+    }
+
+    thead td
+		{
+			font-weight: bold;
+			text-align: center;
+		}
+		table 
+		{ 
+			border-spacing: 5px;
+			border-collapse: separate;
+    }
+
+		td.taken 
+		{
+      border-left: 4px solid #73AD21;
+    }
+
+		td.available
+		{
+      border-left: 4px solid YELLOW;
+    }
+
+    td
+    {
+			padding: 1px;
+			background: white;
+		}
+		
+		tr
+		{
+			margin: 20px 20px;
+		}
+
+    .create-link
+    {
+      padding: 5px;
+    }
+		
+		.title
+		{
+			padding: 5px;
+      font-weight: bold;
+		}
+		
+		.owner
+		{
+			padding: 5px;
+			text-align: right;
+    }	
+
+    .header
+    {
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .edit-link
+    {
+      text-align: right;
+    }
+
+    .page-header
+    {
+      width: 100%;
+      text-align: center;
+      font-weight: bold;
+      color: #0c84a9;
+      font-size: 20px;
+      padding-top: 10px;
+    }
+
+    @media only screen and (max-device-width: 480px) 
+    {
+      body {
+        font-size: 16px;
+      }
+
+      p, ol, ul, td {
+        font-size: 16px;
+      }
+
+      table
+      {
+        width: 100%;
+      }
+
+      .not-current
+      {
+        display: none;
+      }
+
+      .inline-meeting-space
+      {
+        text-align: right;
+      }
+
+      .meeting-space-header
+      {
+        display: none;
+      }
+
+      .mobile-notes
+      {
+        display: block;
+      }
+    }
+
+    @media only screen and (min-width: 480px)
+    {
+      .inline-meeting-space
+      {
+        display: none;
+      }
+      .prev-next-links
+      {
+        display: none;
+      }
+
+      .mobile-notes
+      {
+        display: none;
+      }
+    }
+
