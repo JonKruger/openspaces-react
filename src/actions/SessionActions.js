@@ -33,7 +33,6 @@ export function createSession(timeSlotId, meetingSpaceId) {
 export function editSession(sessionId) {
   return (dispatch) => {
     dispatch({ type: types.EDIT_SESSION, sessionId });
-    browserHistory.push(`/sessions/${sessionId}`);
   };
 }
 

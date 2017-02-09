@@ -7,16 +7,16 @@ import SessionListForm from '../components/SessionListForm';
 class SessionListPage extends React.Component {
   constructor(props, context) {
     super(props, context);
+  }
 
-    // this.save = this.save.bind(this);
+  componentWillMount() {
+    this.props.actions.loadSessionListData();
   }
 
   render() {
     return (
       <SessionListForm 
-        sessions={this.props.sessions}
-        createSession={this.props.actions.createSession}
-        editSession={this.props.actions.editSession}/>
+        sessions={this.props.sessions} />
     );
   }
 

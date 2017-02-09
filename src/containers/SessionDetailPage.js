@@ -10,6 +10,17 @@ class SessionDetailPage extends React.Component
     super(props, context);
   }
 
+  componentWillMount() {
+    let sessionId = +this.props.routeParams["id"];
+    if (sessionId)
+      this.props.actions.editSession(sessionId);
+    else {
+      let timeSlotId = +this.props.location.query["time_slot_id"];
+      let meetingSpaceId = +this.props.location.query["meeting_space_id"];
+      this.props.actions.createSession(timeSlotId, meetingSpaceId);
+    }
+  }
+
   render() {
     return (
       <SessionDetailForm 
@@ -28,7 +39,7 @@ SessionDetailPage.propTypes = {
  
 function mapStateToProps(state) {
   return {
-    session: state.sessions.sessionBeingEdited
+    session: state.sessions.editSession.session
   };
 }
 

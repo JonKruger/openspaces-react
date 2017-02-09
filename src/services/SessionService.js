@@ -1,8 +1,11 @@
 import Session from '../models/Session';
 
-export function loadSessionListData() {
+export function loadSessionListData(sinceDate) {
+  let postData = sinceDate ? {since: sinceDate} : null;
   return fetch("http://localhost:3000/api/sessions", {
-    method: 'get'
+    method: 'post',
+    headers: new Headers({'Content-Type': 'application/json'}),
+    body: JSON.stringify(postData)
   })
     .then(response => { return response.json(); })
     .then(rawData => {

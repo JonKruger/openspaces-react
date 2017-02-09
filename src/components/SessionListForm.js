@@ -1,11 +1,10 @@
 import React, {PropTypes} from 'react';
+import {Link} from 'react-router';
+import moment from 'moment';
 
 class SessionListForm extends React.Component {
   constructor(props, context) {
     super(props, context);
-
-    this.createSession = this.createSession.bind(this);
-    this.editSession = this.editSession.bind(this);
   }
 
   renderTableHeader(time_slots, prev_time_slots, next_time_slots, show_past_sessions, current_time_slot) {
@@ -17,7 +16,7 @@ class SessionListForm extends React.Component {
       {
         return (
           <td key={i} className={ts.id == current_time_slot.id ? 'current' : 'not-current'}>
-            <div>{ts.start_time} {ts.end_time}</div>
+            <div>{this.formatTimeSlot(ts)}</div>
             <div className="prev-next-links">
               {prev_time_slots[ts.id] && 
                 <a href={"/sessions/?time_slot_id=" + prev_time_slots[ts.id]}>Prev</a>
@@ -43,27 +42,23 @@ class SessionListForm extends React.Component {
     return sessions.find(s => s.timeSlotId === timeSlotId && s.meetingSpaceId === meetingSpaceId);
   }
 
+  formatTimeSlot(timeSlot) {
+    return this.formatTimeSlotDate(timeSlot.start_time) + '-' + this.formatTimeSlotDate(timeSlot.end_time);
+  }
+
+  formatTimeSlotDate(date) {
+    if (!date)
+      throw "Time slot date missing";
+    return moment(date).format("ddd h:mma");
+  }
+
   show_create_links() {
     return true;
   }
 
   existingSessionTitleLink(sessions, timeSlotId, meetingSpaceId) {
     const session = this.existingSession(sessions, timeSlotId, meetingSpaceId);
-    return (<a href="#" onClick={this.editSession(session.id)}>{session.title}</a>);
-  }
-
-  createSession(timeSlotId, meetingSpaceId) {
-    return (e) => {
-      e.preventDefault();
-      this.props.createSession(timeSlotId, meetingSpaceId);
-    };
-  }
-
-  editSession(sessionId) {
-    return (e) => {
-      e.preventDefault();
-      this.props.editSession(sessionId);
-    };
+    return <Link to={`sessions/${session.id}`}>{session.title}</Link>;
   }
 
   render() {
@@ -102,7 +97,7 @@ class SessionListForm extends React.Component {
                 ) : (
                   <div>
                     {this.show_create_links() && 
-                      <div className="create-link"><a href="#" onClick={this.createSession(ts.id, ms.id)}>Create</a></div>
+                      <div className="create-link"><Link to={`sessions/new?time_slot_id=${ts.id}&meeting_space_id=${ms.id}`}>Create</Link></div>
                     }
                     <div className="inline-meeting-space">Meeting space {ms.name}</div>
                   </div>
@@ -130,8 +125,6 @@ class SessionListForm extends React.Component {
 
 SessionListForm.propTypes = {
   sessions: PropTypes.object,
-  createSession: PropTypes.func.isRequired,
-  editSession: PropTypes.func.isRequired
 };
 
 export default SessionListForm;

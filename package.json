@@ -31,6 +31,7 @@
   "dependencies": {
     "dns": "0.2.2",
     "fetch": "1.1.0",
+    "moment": "2.17.1",
     "net": "1.0.2",
     "object-assign": "4.1.0",
     "react": "15.4.1",
