@@ -49,7 +49,8 @@ export default function SessionReducer(state = initialState.sessions, action) {
     }
     
     case types.VIEW_SESSION_LIST:
-      return state;
+      newState = objectAssign({}, state, {editSession: { session: null }});
+      return newState;
 
 
     default:

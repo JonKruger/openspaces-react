@@ -11,6 +11,7 @@ class SessionListPage extends React.Component {
 
   componentWillMount() {
     this.props.actions.loadSessionListData();
+    this.props.actions.viewSessionList();
   }
 
   render() {

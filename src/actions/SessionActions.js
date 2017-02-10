@@ -4,7 +4,6 @@ import { browserHistory } from 'react-router';
 
 export function viewSessionList() {
   return (dispatch) => {
-    browserHistory.push('/');
     dispatch({ type: types.VIEW_SESSION_LIST });
   };
 }
@@ -26,7 +25,6 @@ export function loadSessionListData() {
 export function createSession(timeSlotId, meetingSpaceId) {
   return (dispatch) => {
     dispatch({ type: types.CREATE_SESSION, timeSlotId, meetingSpaceId });
-    browserHistory.push(`/sessions/new?time_slot_id=${timeSlotId}&meeting_space_id=${meetingSpaceId}`);
   };
 }
 
@@ -45,7 +43,7 @@ export function saveSession(session) {
     sessionService.saveSession(session)
       .then(data => {
         dispatch({ type: types.SAVE_SESSION, data });
-        viewSessionList()(dispatch);
+        browserHistory.push('/');
       });
   };
 }

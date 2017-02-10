@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import {Link} from 'react-router';
 
 class SessionDetailForm extends React.Component {
   constructor(props, context) {
@@ -19,7 +20,7 @@ class SessionDetailForm extends React.Component {
   render() {
     const session = this.props.session;
     if (!session)
-      return (<div></div>);
+      return <div />;
 
     return (
     <div>
@@ -42,7 +43,7 @@ class SessionDetailForm extends React.Component {
         <input type="submit" name="commit" value="Save" onClick={this.save} />
       </div>
       <a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/sessions/221">Delete This Session</a> |
-      <a href="/sessions">Back</a>
+      <Link to={"/"}>Back</Link>
     </div>);
   }
 }
