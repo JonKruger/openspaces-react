@@ -91,7 +91,11 @@ class SessionListForm extends React.Component {
                 {this.existingSession(sessions,ts.id,ms.id) ? (
                   <div>
                     <div className="title">{this.existingSessionTitleLink(sessions,ts.id,ms.id)}</div>
-                    <div className="owner">{this.existingSession(sessions,ts.id,ms.id).owner}</div>
+                    <div className="owner">
+                      <a href={this.existingSession(sessions,ts.id,ms.id).twitterUrl} target="_blank">
+                        {this.existingSession(sessions,ts.id,ms.id).owner}
+                      </a>
+                    </div>
                     <div className="inline-meeting-space">Meeting space {ms.name}</div>
                   </div>
                 ) : (
