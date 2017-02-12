@@ -15,7 +15,6 @@ export function loadSessionListData(sinceDate) {
         session.title = data.title;
         session.owner = data.owner;
         session.twitterHandle = data.twitter_handle;
-        session.twitterUrl = data.twitter_url;
         session.timeSlotId = data.time_slot_id;
         session.meetingSpaceId = data.meeting_space_id;
         return session;

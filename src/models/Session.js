@@ -7,4 +7,8 @@ export default class Session {
     this.timeSlotId = null;
     this.meetingSpaceId = null;
   }
+
+  get twitterUrl() {
+    return `http://twitter.com/${encodeURIComponent(this.twitterHandle)}`;
+  }
 }
