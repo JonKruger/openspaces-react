@@ -4,13 +4,19 @@ import {Link} from 'react-router';
 class SessionDetailForm extends React.Component {
   constructor(props, context) {
     super(props, context);
-
-    this.onFieldChange = this.onFieldChange.bind(this);
-    this.save = this.save.bind(this);
   }
 
-  onFieldChange(e) {
+  // these need to be arrow functions because they will be called from event handlers
+  // otherwise "this" will not be bound to this class
+  onFieldChange = (e) => {
     this.props.editSessionDataChanged(e.target.name, e.target.value);
+  }
+
+  // these need to be arrow functions because they will be called from event handlers
+  // otherwise "this" will not be bound to this class
+  save = (e) => {
+    e.preventDefault();
+    this.props.saveSession(this.props.session);
   }
 
   validateRequired(value) {
@@ -35,11 +41,6 @@ class SessionDetailForm extends React.Component {
         isValid = false;
     }
     return isValid;
-  }
-
-  save(e) {
-    e.preventDefault();
-    this.props.saveSession(this.props.session);
   }
 
   render() {
