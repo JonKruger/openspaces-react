@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import SessionReducer from './SessionReducer';
+import SessionReducer from '../../sessions/SessionReducer';
 import {routerReducer} from 'react-router-redux';
 
 const rootReducer = combineReducers({

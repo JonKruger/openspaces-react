@@ -1,4 +1,4 @@
-import Session from '../models/Session';
+import Session from './models/Session';
 
 export function loadSessionListData(sinceDate) {
   let postData = sinceDate ? {since: sinceDate} : null;

@@ -30,7 +30,7 @@ class SessionDetailForm extends React.Component {
 
   isFormValid() {
     let isValid = true;
-    for (let [value] of Object.entries(this.validFields)) {
+    for (let [key, value] of Object.entries(this.validFields)) {
       if (!value)
         isValid = false;
     }
@@ -85,7 +85,7 @@ class SessionDetailForm extends React.Component {
       </div>
       <br />
       <div className="actions">
-        <input type="submit" name="commit" value="Save" disabled={!this.isFormValid(session)} />
+        <input type="submit" name="commit" value="Save" disabled={this.isFormValid(session) ? "" : "disabled"} />
       </div>
       <a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/sessions/221">Delete This Session</a> |
       <Link to={"/"}>Back</Link>

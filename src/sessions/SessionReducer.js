@@ -1,6 +1,6 @@
-import * as types from '../constants/ActionTypes';
+import * as types from './ActionTypes';
 import objectAssign from 'object-assign';
-import Session from '../models/Session';
+import Session from './models/Session';
 
 const INITIAL_STATE = {
 		sessions: [],

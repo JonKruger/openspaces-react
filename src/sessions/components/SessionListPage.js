@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as actions from '../actions/SessionActions';
+import * as actions from '../SessionActions';
 import SessionListForm from '../components/SessionListForm';
 
 class SessionListPage extends React.Component {

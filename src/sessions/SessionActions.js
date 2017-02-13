@@ -1,5 +1,5 @@
-import * as types from '../constants/ActionTypes';
-import * as sessionService from '../services/SessionService';
+import * as types from './ActionTypes';
+import * as sessionService from './SessionService';
 import { browserHistory } from 'react-router';
 
 export function viewSessionList() {

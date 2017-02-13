@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import SessionListPage from './containers/SessionListPage';
-import SessionDetailPage from './containers/SessionDetailPage';
+import SessionListPage from './sessions/components/SessionListPage';
+import SessionDetailPage from './sessions/components/SessionDetailPage';
 
-import App from './components/App';
+import App from './app/components/App';
 
 export default (
   <Route path="/" component={App}>
