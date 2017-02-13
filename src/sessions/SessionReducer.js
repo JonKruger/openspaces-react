@@ -1,4 +1,4 @@
-import * as types from './ActionTypes';
+import * as types from './SessionActionTypes';
 import objectAssign from 'object-assign';
 import Session from './models/Session';
 

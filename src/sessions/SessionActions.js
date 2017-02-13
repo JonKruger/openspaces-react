@@ -1,4 +1,4 @@
-import * as types from './ActionTypes';
+import * as types from './SessionActionTypes';
 import * as sessionService from './SessionService';
 import { browserHistory } from 'react-router';
 
