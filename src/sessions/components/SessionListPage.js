@@ -10,13 +10,12 @@ class SessionListPage extends React.Component {
   }
 
   componentWillMount() {
-    this.props.actions.loadSessionListData(this.props.sessions.last_load_time);
+    this.props.actions.loadSessionListData(this.props.last_load_time);
   }
 
   render() {
     return (
-      <SessionListForm 
-        sessions={this.props.sessions} />
+      <SessionListForm {...this.props} />
     );
   }
 
@@ -24,13 +23,15 @@ class SessionListPage extends React.Component {
 
 SessionListPage.propTypes = {
   sessions: PropTypes.object.isRequired,
+  time_slots: PropTypes.array.isRequired,
+  meeting_spaces: PropTypes.array.isRequired,
+  current_time_slot: PropTypes.object.isRequired,
+  last_load_time: PropTypes.object,
   actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
-  return {
-    sessions: state.sessions.viewSessionList
-  };
+  return {...state.sessions.viewSessionList};
 }
 
 function mapDispatchToProps(dispatch) {

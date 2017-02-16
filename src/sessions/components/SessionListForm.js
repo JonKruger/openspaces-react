@@ -82,7 +82,7 @@ class SessionListForm extends React.Component {
   }
 
   render = () => {
-    const {sessions, time_slots, meeting_spaces, current_time_slot} = this.props.sessions;
+    const {sessions, time_slots, meeting_spaces, current_time_slot} = this.props;
     if (!sessions)
       return "";
 
@@ -117,7 +117,7 @@ class SessionListForm extends React.Component {
 }
 
 SessionListForm.propTypes = {
-  sessions: PropTypes.object,
+  sessions: PropTypes.array.isRequired,
 };
 
 export default SessionListForm;
