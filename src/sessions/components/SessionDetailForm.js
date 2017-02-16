@@ -19,11 +19,11 @@ class SessionDetailForm extends React.Component {
     this.props.saveSession(this.props.session);
   }
 
-  validateRequired(value) {
+  validateRequired = (value) => {
     return value ? true : false;
   }
 
-  validate(session) {
+  validate = (session) => {
     if (session) {
       this.validFields = {
         title: this.validateRequired(session.title),
@@ -34,7 +34,7 @@ class SessionDetailForm extends React.Component {
       this.validFields = {};
   }
 
-  isFormValid() {
+  isFormValid = () => {
     let isValid = true;
     for (let [key, value] of Object.entries(this.validFields)) {
       if (!value)
@@ -43,7 +43,7 @@ class SessionDetailForm extends React.Component {
     return isValid;
   }
 
-  render() {
+  render = () => {
     let session = this.props.session;
     if (!session)
       return <div />;

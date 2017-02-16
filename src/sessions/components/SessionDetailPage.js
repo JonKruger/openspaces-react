@@ -34,7 +34,9 @@ class SessionDetailPage extends React.Component
  
 SessionDetailPage.propTypes = {
   session: PropTypes.object,
-  actions: PropTypes.object
+  actions: PropTypes.object,
+  routeParams: PropTypes.object,
+  location: PropTypes.object
 };
  
 function mapStateToProps(state) {

@@ -1,5 +1,5 @@
-import React, {PropTypes} from 'react';
-import {Link} from 'react-router';
+import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
 import moment from 'moment';
 
 class SessionListForm extends React.Component {
@@ -7,122 +7,111 @@ class SessionListForm extends React.Component {
     super(props, context);
   }
 
-  renderTableHeader(time_slots, prev_time_slots, next_time_slots, show_past_sessions, current_time_slot) {
+  TableHeader = ({time_slots, show_past_sessions, current_time_slot}) => {
     if (!time_slots)
-      return "";
+      return <thead />;
 
-    let result = time_slots.map((ts, i) => {
-      if (show_past_sessions || !this.isTimeSlotInPast(ts))
-      {
-        return (
-          <td key={i} className={ts.id == current_time_slot.id ? 'current' : 'not-current'}>
-            <div>{this.formatTimeSlot(ts)}</div>
-            <div className="prev-next-links">
-              {prev_time_slots[ts.id] && 
-                <a href={"/sessions/?time_slot_id=" + prev_time_slots[ts.id]}>Prev</a>
-              }
-              {next_time_slots[ts.id] &&
-                <a href={"/sessions/?time_slot_id=" + next_time_slots[ts.id]}>Next</a>
-              }
+    return (
+      <thead>
+        <tr>
+          <td className="meeting-space-header">Meeting Space</td>
+          {time_slots.map((ts, i) => {
+            if (show_past_sessions || !this.isTimeSlotInPast(ts)) {
+              return (
+                <td key={i} className={ts.id == current_time_slot.id ? 'current' : 'not-current'}>
+                  <div>{this.formatTimeSlot(ts)}</div>
+                </td>
+              );
+            }
+          })}
+        </tr>
+      </thead>);
+  }
+
+  Session = ({session, ts, ms, current_time_slot}) => {
+    return (
+      <td className={(session ? 'taken' : 'available') + " " + (ts.id == current_time_slot.id ? 'current' : 'not-current')}>
+        {session ? (
+          <div>
+            <div className="title">
+              <this.TitleLink session={session} />
             </div>
-          </td>        
-        );
-      }
-    });
-    return result;
+            <div className="owner">
+              <a href={session.twitterUrl} target="_blank">
+                {session.owner}
+              </a>
+            </div>
+            <div className="inline-meeting-space">Meeting space {ms.name}</div>
+          </div>
+        ) : (
+            <div>
+              {this.show_create_links() &&
+                <div className="create-link"><Link to={`sessions/new?time_slot_id=${ts.id}&meeting_space_id=${ms.id}`}>Create</Link></div>
+              }
+              <div className="inline-meeting-space">Meeting space {ms.name}</div>
+            </div>
+          )}
+      </td>
+    );
   }
 
-  isTimeSlotInPast(timeSlot)
-  {
-    // never in the past
-    return timeSlot != 809234890234; // todo
+  TitleLink = ({session}) =>
+    <Link to={`sessions/${session.id}`}>{session.title}</Link>
+
+  isTimeSlotInPast = (timeSlot) => {
+    // todo
+    return false;
   }
 
-  existingSession(sessions, timeSlotId, meetingSpaceId) {
+  existingSession = (sessions, timeSlotId, meetingSpaceId) => {
     return sessions.find(s => s.timeSlotId === timeSlotId && s.meetingSpaceId === meetingSpaceId);
   }
 
-  formatTimeSlot(timeSlot) {
+  formatTimeSlot = (timeSlot) => {
     return this.formatTimeSlotDate(timeSlot.start_time) + '-' + this.formatTimeSlotDate(timeSlot.end_time);
   }
 
-  formatTimeSlotDate(date) {
+  formatTimeSlotDate = (date) => {
     if (!date)
       throw "Time slot date missing";
     return moment(date).format("ddd h:mma");
   }
 
-  show_create_links() {
+  show_create_links = () => {
     return true;
   }
 
-  existingSessionTitleLink(sessions, timeSlotId, meetingSpaceId) {
-    const session = this.existingSession(sessions, timeSlotId, meetingSpaceId);
-    return <Link to={`sessions/${session.id}`}>{session.title}</Link>;
-  }
-
-  render() {
-    const {sessions, time_slots, meeting_spaces, prev_time_slots, next_time_slots, current_time_slot} = this.props.sessions;
+  render = () => {
+    const {sessions, time_slots, meeting_spaces, current_time_slot} = this.props.sessions;
     if (!sessions)
       return "";
 
     const show_past_sessions = true;
 
     return (
-<div>
-<div className="page-header">CodeMash Open Spaces</div>
+      <div>
+        <div className="page-header">CodeMash Open Spaces</div>
+        <table>
+          <this.TableHeader {...{ time_slots, show_past_sessions, current_time_slot }} />
+          <tbody>
+            {meeting_spaces.map((ms, i) =>
+              <tr key={i}>
+                <td className="header meeting-space-header">{ms.name}</td>
 
-<table>
-  <thead>
-    <tr>
-      <td className="meeting-space-header">Meeting Space</td>
-      {this.renderTableHeader(time_slots, prev_time_slots, next_time_slots, show_past_sessions, current_time_slot)}
-    </tr>
-  </thead>  
-  <tbody>
-    {meeting_spaces.map((ms, i) => {
-      return (
-        <tr key={i}>  
-          <td key="-1" className="header meeting-space-header">{ms.name}</td>
-
-          {time_slots.map((ts, tsIndex) => {
-            return (
-              <td key={tsIndex} className={(this.existingSession(sessions,ts.id,ms.id) ? 'taken' : 'available') + " " + (ts.id == current_time_slot.id ? 'current' : 'not-current')}>
-                {this.existingSession(sessions,ts.id,ms.id) ? (
-                  <div>
-                    <div className="title">{this.existingSessionTitleLink(sessions,ts.id,ms.id)}</div>
-                    <div className="owner">
-                      <a href={this.existingSession(sessions,ts.id,ms.id).twitterUrl} target="_blank">
-                        {this.existingSession(sessions,ts.id,ms.id).owner}
-                      </a>
-                    </div>
-                    <div className="inline-meeting-space">Meeting space {ms.name}</div>
-                  </div>
-                ) : (
-                  <div>
-                    {this.show_create_links() && 
-                      <div className="create-link"><Link to={`sessions/new?time_slot_id=${ts.id}&meeting_space_id=${ms.id}`}>Create</Link></div>
-                    }
-                    <div className="inline-meeting-space">Meeting space {ms.name}</div>
-                  </div>
+                {time_slots.map((ts, tsIndex) =>
+                  <this.Session key={tsIndex} session={this.existingSession(sessions, ts.id, ms.id)} {...{ ms, ts, current_time_slot }} />
                 )}
-              </td>
-            );
-          })}
-
-        </tr>
-      );
-    })}
-  </tbody>
-</table>
-<div className="mobile-notes">
-  <br/>
-  <i>Turn your device sideways to view all sessions</i>
-</div>
-<br/>
-<i>Questions?  Issues?  Contact <a href="http://twitter.com/jonkruger" target="_blank">@JonKruger</a></i>
-</div>
-
+              </tr>
+            )}
+          </tbody>
+        </table>
+        <div className="mobile-notes">
+          <br />
+          <i>Turn your device sideways to view all sessions</i>
+        </div>
+        <br />
+        <i>Questions?  Issues?  Contact <a href="http://twitter.com/jonkruger" target="_blank">@JonKruger</a></i>
+      </div>
     );
   }
 }
