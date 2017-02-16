@@ -2,6 +2,7 @@ import Session from './models/Session';
 
 export function loadSessionListData(sinceDate) {
   let postData = sinceDate ? {since: sinceDate} : null;
+  let now = new Date();
   return fetch("http://localhost:3000/api/sessions", {
     method: 'post',
     headers: new Headers({'Content-Type': 'application/json'}),
@@ -19,6 +20,8 @@ export function loadSessionListData(sinceDate) {
         session.meetingSpaceId = data.meeting_space_id;
         return session;
       });
+      console.log(`just loaded ${rawData.sessions.length} sessions`);
+      rawData.last_load_time = now;
       return rawData;
     });
 }

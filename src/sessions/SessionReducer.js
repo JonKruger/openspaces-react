@@ -3,12 +3,13 @@ import objectAssign from 'object-assign';
 import Session from './models/Session';
 
 const INITIAL_STATE = {
-		sessions: [],
-		time_slots: [],
-		meeting_spaces: [],
-		next_time_slots: {},
-		prev_time_slots: {},
-		current_time_slot: {},
+    viewSessionList: {
+      sessions: [],
+      time_slots: [],
+      meeting_spaces: [],
+      current_time_slot: {},
+      last_load_time: null
+    },
 		editSession:
 		{
 			session: null
@@ -35,7 +36,7 @@ export default function SessionReducer(state = INITIAL_STATE, action) {
 
     case types.EDIT_SESSION:
     {
-      let sessionBeingEdited = state.sessions.find(s => s.id == action.sessionId);
+      let sessionBeingEdited = state.viewSessionList.sessions.find(s => s.id == action.sessionId);
       newState = objectAssign({}, state, 
       {
         editSession: 
@@ -56,12 +57,19 @@ export default function SessionReducer(state = INITIAL_STATE, action) {
     }
 
     case types.LOAD_SESSIONS:
-      newState = objectAssign({}, state, action.data);
+      newState = objectAssign({}, state, {
+        viewSessionList: {
+          sessions: mergeById(state.viewSessionList.sessions, action.data.sessions),
+          time_slots: mergeById(state.viewSessionList.time_slots, action.data.time_slots),
+          meeting_spaces: mergeById(state.viewSessionList.meeting_spaces, action.data.meeting_spaces),
+          current_time_slot: state.viewSessionList.current_time_slot ||  action.data.current_time_slot,
+          last_load_time: action.data.last_load_time
+        }});
       return newState;
 
     case types.SAVE_SESSION:
     {
-      let sessions = state.sessions.filter(s => s.id !== state.editSession.session.id);
+      let sessions = state.viewSessionList.sessions.filter(s => s.id !== state.editSession.session.id);
       sessions.push(state.editSession.session);
       newState = objectAssign({}, state, {sessions: sessions});
       return newState;
@@ -75,4 +83,10 @@ export default function SessionReducer(state = INITIAL_STATE, action) {
     default:
       return state;
   }
+}
+
+function mergeById(existingItems, newItems) {
+  newItems = newItems || [];
+  let newItemIds = newItems.map(i => i.id);
+  return existingItems.filter(i => !newItemIds.find(id => id === i.id)).concat(newItems);
 }

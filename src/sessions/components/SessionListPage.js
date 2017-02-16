@@ -10,8 +10,7 @@ class SessionListPage extends React.Component {
   }
 
   componentWillMount() {
-    this.props.actions.loadSessionListData();
-    this.props.actions.viewSessionList();
+    this.props.actions.loadSessionListData(this.props.sessions.last_load_time);
   }
 
   render() {
@@ -30,7 +29,7 @@ SessionListPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    sessions: state.sessions
+    sessions: state.sessions.viewSessionList
   };
 }
 

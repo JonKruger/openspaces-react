@@ -8,9 +8,9 @@ export function viewSessionList() {
   };
 }
 
-export function loadSessionListData() {
+export function loadSessionListData(last_load_time) {
   return (dispatch) => {
-    sessionService.loadSessionListData()
+    sessionService.loadSessionListData(last_load_time)
       .then(data => {
         dispatch(
           {
