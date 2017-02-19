@@ -9,7 +9,33 @@ class SessionListPage extends React.Component {
     super(props, context);
   }
 
+  mounted = false;
+
   componentWillMount() {
+    console.log("mount");
+    this.mounted = true;
+    this.loadSessions();
+    let autoRefreshSeconds = +this.props.location.query["auto-refresh"];
+    if (autoRefreshSeconds)
+      this.periodicallyLoadSessions(autoRefreshSeconds * 1000);
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+    console.log("unmount");
+  }
+
+  periodicallyLoadSessions(waitTimeInMilliseconds)  {
+    setTimeout(() => {
+      if (!this.mounted)
+        return;
+        
+      this.loadSessions();
+      this.periodicallyLoadSessions(waitTimeInMilliseconds);
+    }, waitTimeInMilliseconds);
+  }
+
+  loadSessions() {
     this.props.actions.loadSessionListData(this.props.last_load_time);
   }
 
@@ -22,7 +48,7 @@ class SessionListPage extends React.Component {
 }
 
 SessionListPage.propTypes = {
-  sessions: PropTypes.object.isRequired,
+  sessions: PropTypes.array.isRequired,
   time_slots: PropTypes.array.isRequired,
   meeting_spaces: PropTypes.array.isRequired,
   current_time_slot: PropTypes.object.isRequired,
