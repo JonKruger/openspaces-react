@@ -6,10 +6,6 @@ import * as actions from '../SessionActions';
 
 class SessionDetailPage extends React.Component
 {
-  constructor(props, context) {
-    super(props, context);
-  }
-
   componentWillMount() {
     let sessionId = +this.props.routeParams["id"];
     if (sessionId)
