@@ -3,7 +3,7 @@ import Session from './models/Session';
 export function loadSessionListData(sinceDate) {
   let postData = sinceDate ? {since: sinceDate} : null;
   let now = new Date();
-  return fetch("http://localhost:3000/api/sessions", {
+  return fetch("http://stirtrekopenspaces.herokuapp.com/api/sessions", {
     method: 'post',
     headers: new Headers({'Content-Type': 'application/json'}),
     body: JSON.stringify(postData)
@@ -36,7 +36,7 @@ export function saveSession(session) {
     meeting_space_id: session.meetingSpaceId
   };
 
-  return fetch("http://localhost:3000/api/sessions/save", {
+  return fetch("http://stirtrekopenspaces.herokuapp.com/api/sessions/save", {
     method: 'post',
     headers: new Headers({'Content-Type': 'application/json'}),
     body: JSON.stringify(sessionData)

@@ -90,7 +90,7 @@ class SessionListForm extends React.Component {
 
     return (
       <div>
-        <div className="page-header">CodeMash Open Spaces</div>
+        <div className="page-header">Stir Trek Open Spaces</div><br/>
         <table>
           <this.TableHeader {...{ time_slots, show_past_sessions, current_time_slot }} />
           <tbody>

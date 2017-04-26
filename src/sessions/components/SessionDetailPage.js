@@ -35,17 +35,17 @@ SessionDetailPage.propTypes = {
   location: PropTypes.object
 };
  
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   return {
     session: state.sessions.editSession.session
   };
-}
+};
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators(actions, dispatch)
   };
-}
+};
  
 export default connect(
   mapStateToProps,

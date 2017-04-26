@@ -7,12 +7,11 @@ import SessionListForm from '../components/SessionListForm';
 class SessionListPage extends React.Component {
   constructor(props, context) {
     super(props, context);
+
+    this.mounted = false;
   }
 
-  mounted = false;
-
   componentWillMount() {
-    console.log("mount");
     this.mounted = true;
     this.loadSessions();
     let autoRefreshSeconds = +this.props.location.query["auto-refresh"];
@@ -22,7 +21,6 @@ class SessionListPage extends React.Component {
 
   componentWillUnmount() {
     this.mounted = false;
-    console.log("unmount");
   }
 
   periodicallyLoadSessions(waitTimeInMilliseconds)  {
@@ -56,11 +54,11 @@ SessionListPage.propTypes = {
   actions: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   return {...state.sessions.viewSessionList};
 }
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
     actions: bindActionCreators(actions, dispatch)
   };
